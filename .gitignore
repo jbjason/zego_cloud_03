@@ -23,5 +23,27 @@ doc/api/
 *.js.deps
 *.js.map
 
+# Build directories
+**/build/
+**/android/app/build/
+**/ios/Flutter/App.framework/
+**/ios/Flutter/Flutter.framework/
+
+# Debug files
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Dart/Flutter files
+.dart_tool/
+.packages
+.pub-cache/
+.pub
+
 .flutter-plugins
 .flutter-plugins-dependencies
