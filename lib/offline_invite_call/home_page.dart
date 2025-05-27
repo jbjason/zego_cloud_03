@@ -1,6 +1,4 @@
 // Flutter imports:
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,7 +12,7 @@ import 'constants.dart';
 import 'login_service.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => HomePageState();
@@ -72,7 +70,11 @@ class HomePageState extends State<HomePage> {
                 : () {
                     logout().then((value) {
                       onUserLogout();
-                      Navigator.pushNamed(context, PageRouteNames.login);
+
+                      Navigator.pushNamed(
+                        context,
+                        PageRouteNames.login,
+                      );
                     });
                   },
           );
@@ -82,41 +84,43 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget userListView() {
-    final random = RandomGenerator();
-    final faker = Faker();
+    final RandomGenerator random = RandomGenerator();
+    final Faker faker = Faker();
 
     return Center(
       child: ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: 10,
+        itemCount: 2,
         itemBuilder: (context, index) {
           late TextEditingController inviteeUsersIDTextCtrl;
           late List<Widget> userInfo;
           if (0 == index) {
             inviteeUsersIDTextCtrl = singleInviteeUserIDTextCtrl;
             userInfo = [
-              const Text('invitee name ('),
+              const Text('invitee id ('),
               inviteeIDFormField(
                 textCtrl: inviteeUsersIDTextCtrl,
                 formatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
+                  FilteringTextInputFormatter.allow(RegExp(
+                      r'^[a-zA-Z0-9,!#$%&()*+:\-;<=>.?@[\]^_{|}~]{1,32}$')),
                 ],
-                labelText: 'invitee ID',
-                hintText: 'plz enter invitee ID',
+                labelText: "invitee ID",
+                hintText: "plz enter invitee ID",
               ),
               const Text(')'),
             ];
           } else if (1 == index) {
             inviteeUsersIDTextCtrl = groupInviteeUserIDsTextCtrl;
             userInfo = [
-              const Text('group name ('),
+              const Text('group id ('),
               inviteeIDFormField(
                 textCtrl: inviteeUsersIDTextCtrl,
                 formatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
+                  FilteringTextInputFormatter.allow(RegExp(
+                      r'^[a-zA-Z0-9,!#$%&()*+:\-;<=>.?@[\]^_{|}~]{1,32}$')),
                 ],
-                labelText: 'invitees ID',
+                labelText: "invitees ID",
                 hintText: "separate IDs by ','",
               ),
               const Text(')'),
@@ -170,21 +174,21 @@ class HomePageState extends State<HomePage> {
     List<String> errorInvitees,
   ) {
     if (errorInvitees.isNotEmpty) {
-      var userIDs = '';
-      for (var index = 0; index < errorInvitees.length; index++) {
+      String userIDs = "";
+      for (int index = 0; index < errorInvitees.length; index++) {
         if (index >= 5) {
           userIDs += '... ';
           break;
         }
 
-        final userID = errorInvitees.elementAt(index);
-        userIDs += '$userID ';
+        var userID = errorInvitees.elementAt(index);
+        userIDs += userID + ' ';
       }
       if (userIDs.isNotEmpty) {
         userIDs = userIDs.substring(0, userIDs.length - 1);
       }
 
-      var message = "User doesn't exist or is offline: $userIDs";
+      var message = 'User doesn\'t exist or is offline: $userIDs';
       if (code.isNotEmpty) {
         message += ', code: $code, message:$message';
       }
@@ -213,11 +217,12 @@ Widget inviteeIDFormField({
   return Expanded(
     flex: 100,
     child: SizedBox(
-      height: 30,
+      height: 80,
       child: TextFormField(
         style: textStyle,
         controller: textCtrl,
         inputFormatters: formatters,
+        maxLines: 3,
         decoration: InputDecoration(
           isDense: true,
           hintText: hintText,
@@ -239,15 +244,15 @@ Widget sendCallButton({
   return ValueListenableBuilder<TextEditingValue>(
     valueListenable: inviteeUsersIDTextCtrl,
     builder: (context, inviteeUserID, _) {
-      final invitees =
-          getInvitesFromTextCtrl(inviteeUsersIDTextCtrl.text.trim());
+      var invitees = getInvitesFromTextCtrl(inviteeUsersIDTextCtrl.text.trim());
 
       return ZegoSendCallInvitationButton(
         isVideoCall: isVideoCall,
         invitees: invitees,
-        resourceID: 'zego_data', // 'zego_cloud_03_resourceId'
+        resourceID: "zego_data",
         iconSize: const Size(40, 40),
         buttonSize: const Size(50, 50),
+        timeoutSeconds: 30,
         onPressed: onCallFinished,
       );
     },
@@ -255,10 +260,10 @@ Widget sendCallButton({
 }
 
 List<ZegoUIKitUser> getInvitesFromTextCtrl(String textCtrlText) {
-  final invitees = <ZegoUIKitUser>[];
+  List<ZegoUIKitUser> invitees = [];
 
-  final inviteeIDs = textCtrlText.trim().replaceAll('，', '');
-  inviteeIDs.split(',').forEach((inviteeUserID) {
+  var inviteeIDs = textCtrlText.trim().replaceAll('，', '');
+  inviteeIDs.split(",").forEach((inviteeUserID) {
     if (inviteeUserID.isEmpty) {
       return;
     }
