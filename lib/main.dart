@@ -4,9 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
+import 'offline_invite_call/constants.dart';
+import 'offline_invite_call/login_service.dart';
+
 // Project imports:
-import 'call_invite/constants.dart';
-import 'call_invite/login_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +36,12 @@ void main() async {
 
 class MyApp extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
-  const MyApp({required this.navigatorKey, super.key});
+
+  const MyApp({
+    required this.navigatorKey,
+    super.key,
+  });
+
   @override
   State<StatefulWidget> createState() => MyAppState();
 }
@@ -44,6 +50,7 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
     if (currentUser.id.isNotEmpty) {
       onUserLogin();
     }
@@ -55,6 +62,7 @@ class MyAppState extends State<MyApp> {
       routes: routes,
       initialRoute:
           currentUser.id.isEmpty ? PageRouteNames.login : PageRouteNames.home,
+      color: Colors.red,
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFEFEFEF)),
 
       /// 3/5: register the navigator key to MaterialApp
@@ -76,6 +84,7 @@ class MyAppState extends State<MyApp> {
     );
   }
 }
+
 
 
 ///

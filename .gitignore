@@ -1,9 +1,15 @@
-# See https://www.dartlang.org/guides/libraries/private-files
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
 
-# Files and directories created by pub
-.dart_tool/
-.packages
-build/
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
 
@@ -13,6 +19,9 @@ doc/api/
 
 # dotenv environment variables file
 .env*
+
+# Web related
+lib/generated_plugin_registrant.dart
 
 # Avoid committing generated Javascript files:
 *.dart.js
@@ -34,16 +43,30 @@ doc/api/
 **/android/app/profile/
 **/android/app/release/
 
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# private
+google-services.json
+
+
+
 # IDE files
 .idea/
 .vscode/
 *.iml
+*.ipr
 
-# Dart/Flutter files
+# Dart/Flutter/Pub files
+**/doc/api/
+**/ios/Flutter/.last_build_id
 .dart_tool/
 .packages
 .pub-cache/
-.pub
-
+.pub/
+/build/
 .flutter-plugins
 .flutter-plugins-dependencies
