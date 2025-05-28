@@ -1,5 +1,7 @@
 // Flutter imports:
 
+// ignore_for_file: use_build_context_synchronously
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -110,11 +112,7 @@ class LoginPageState extends State<LoginPage> {
                 userName: 'user_${_userIDTextCtrl.text}',
               ).then((value) {
                 onUserLogin();
-
-                Navigator.pushNamed(
-                  context,
-                  PageRouteNames.home,
-                );
+                Navigator.pushNamed(context, PageRouteNames.home);
               });
             },
       child: const Text('Sign In', style: textStyle),

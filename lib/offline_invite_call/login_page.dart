@@ -1,5 +1,4 @@
-// Flutter imports:
-
+// ignore_for_file: use_build_context_synchronously
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -12,8 +11,7 @@ import 'login_service.dart';
 import 'util.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
+  const LoginPage({super.key});
   @override
   State<StatefulWidget> createState() => LoginPageState();
 }

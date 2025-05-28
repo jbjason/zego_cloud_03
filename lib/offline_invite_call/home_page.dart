@@ -1,4 +1,6 @@
 // Flutter imports:
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,8 +14,7 @@ import 'constants.dart';
 import 'login_service.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
+  const HomePage({super.key});
   @override
   State<StatefulWidget> createState() => HomePageState();
 }
@@ -182,7 +183,7 @@ class HomePageState extends State<HomePage> {
         }
 
         var userID = errorInvitees.elementAt(index);
-        userIDs += userID + ' ';
+        userIDs += '$userID ';
       }
       if (userIDs.isNotEmpty) {
         userIDs = userIDs.substring(0, userIDs.length - 1);
@@ -249,7 +250,7 @@ Widget sendCallButton({
       return ZegoSendCallInvitationButton(
         isVideoCall: isVideoCall,
         invitees: invitees,
-        resourceID: "zego_data",
+        resourceID: 'zego_cloud_03_resourceId', //"zego_data",
         iconSize: const Size(40, 40),
         buttonSize: const Size(50, 50),
         timeoutSeconds: 30,
