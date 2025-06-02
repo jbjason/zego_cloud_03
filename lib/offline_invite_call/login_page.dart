@@ -36,9 +36,7 @@ class LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: WillPopScope(
-        onWillPop: () async {
-          return ZegoUIKit().onWillPop(context);
-        },
+        onWillPop: () async => ZegoUIKit().onWillPop(context),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 50),
           child: Column(
