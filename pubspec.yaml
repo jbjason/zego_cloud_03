@@ -19,6 +19,7 @@ dependencies:
   zego_uikit: ^2.28.15
   zego_uikit_prebuilt_call: ^4.16.29
   zego_uikit_signaling_plugin: ^2.8.12
+  logger: ^2.5.0
 
 dev_dependencies:
   flutter_test:

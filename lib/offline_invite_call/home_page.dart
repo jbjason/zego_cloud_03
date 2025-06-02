@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:faker/faker.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:logger/logger.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 // Project imports:
@@ -20,10 +21,11 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final TextEditingController singleInviteeUserIDTextCtrl =
+  final  singleInviteeUserIDTextCtrl =
       TextEditingController();
-  final TextEditingController groupInviteeUserIDsTextCtrl =
+  final  groupInviteeUserIDsTextCtrl =
       TextEditingController();
+  
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +176,8 @@ class HomePageState extends State<HomePage> {
     String message,
     List<String> errorInvitees,
   ) {
+    Logger().e(
+        'onSendCallInvitationFinished: code: $code,\n message: $message,\n errorInvitees: $errorInvitees');
     if (errorInvitees.isNotEmpty) {
       String userIDs = "";
       for (int index = 0; index < errorInvitees.length; index++) {
@@ -253,8 +257,14 @@ Widget sendCallButton({
         resourceID: 'zego_cloud_03_resourceId', //"zego_data",
         iconSize: const Size(40, 40),
         buttonSize: const Size(50, 50),
-        timeoutSeconds: 30,
+        notificationTitle: "Soowgood Patient",
+        notificationMessage: "Doctor, your patient is calling",
+        timeoutSeconds: 3,
         onPressed: onCallFinished,
+        onWillPressed:()async{
+         //if()
+          return true;
+        } ,
       );
     },
   );
